@@ -4,7 +4,7 @@
 
 <mapper namespace="join">
     <select id="findZipcode" statementType="PREPARED" parameterType="String" resultType="catgirl.springboot.semiprojectv5.model.Zipcode">
-        select * from zipcode2013 where dong like #{dong}
+        select * from ZIPCODE2013 where dong like #{dong}
     </select>
 
     <select id="selectOneUid" statementType="PREPARED" parameterType="String" resultType="int">
