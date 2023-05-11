@@ -1,4 +1,4 @@
-// ---------------------------------------------
+// ---------------------------------------------agree
 // 이용약관 체크박스
 let agree1 = document.querySelector('#agree1');
 // 개인정보 이용 체크박스
@@ -8,26 +8,26 @@ let agree2 = document.querySelector('#agree2');
 let okagree = document.querySelector('#okagree');
 okagree?.addEventListener('click', () => {
     if(!agree1.checked) alert("이용약관 동의에 체크하세요!");
-    else if(!agree2.checked) alert("개인정보 이용 동의에 체크하세요!")
-    else location.href = '/join/checkme';
+    else if(!agree2.checked) alert("개인정보 이용 동의에 체크하세요!");
+    else location.href = "/join/checkme";
 });
 
 // 미동의버튼
 let noagree = document.querySelector('#noagree');
 noagree?.addEventListener('click', () => {
-    location.href = '/';
+    location.href = "/";
 });
 
 // --------------------------------------------- checkme
 const chkfrm2 = document.forms.checkfrm2;
 const chk2btn = document.querySelector('#check2btn');
 chk2btn?.addEventListener('click', () => {
-    if(chkfrm2.name2.value === '') alert('이름을 입력하세요!!');
+    if(chkfrm2.name.value === '') alert('이름을 입력하세요!!');
     else if(chkfrm2.jumin1.value === '') alert('주민번호를 입력하세요!!');
     else if(chkfrm2.jumin2.value === '') alert('나머지 주민번호를 입력하세요!!');
     else if(!chkfrm2.chkjumin.checked) alert('주민번호 처리에 동의하세요!!');
     else {
-        chkfrm2.method='post'
+        chkfrm2.method='post';
         chkfrm2.action='/join/joinme';
         chkfrm2.submit();
     }
@@ -36,7 +36,7 @@ chk2btn?.addEventListener('click', () => {
 // --------------------------------------------- joinme
 const joinfrm = document.forms.joinfrm;
 const joinbtn = document.querySelector('#joinbtn');
-const dong  = document.querySelector('#dong');
+const dong = document.querySelector('#dong');
 const zipbtn = document.querySelector('#findzipbtn');
 const addrlist = document.querySelector('#addrlist');
 const sendzip = document.querySelector('#sendzip');
@@ -49,15 +49,10 @@ const pwdmsg = document.querySelector('#pwdmsg');
 const repasswd = document.querySelector('#repasswd');
 
 let modal = null;
-try {
-    modal = new bootstrap.Modal(zipmodal, {});
-} catch (e){
-
-}
 
 joinbtn?.addEventListener('click', () => {
-    if(joinfrm.userid.value == '') alert('아이디를 입력하세요!!')
-    else if(joinfrm.passwd.value == '') alert('비밀번호를 입력하세요!!')
+    if(joinfrm.userid.value == '') alert('아이디를 입력하세요!!');
+    else if(joinfrm.passwd.value == '') alert('비밀번호를 입력하세요!!');
     else if(joinfrm.repasswd.value == '') alert('비밀번호를 확인을 입력하세요!!');
     else if(joinfrm.repasswd.value != joinfrm.passwd.value) alert('비밀번호가 서로 일치하지 않아요!!');
     else if(joinfrm.zip1.value == '' || joinfrm.zip2.value == '') alert('우편번호를 확인하세요!!');
@@ -82,7 +77,14 @@ zpmdbtn?.addEventListener('click', () => {
     }
 
     dong.value = '';
-    modal.show();
+
+    let mymodal = null;
+    try {
+        mymodal = new bootstrap.Modal(zipmodal, {});
+        modal = mymodal;
+    } catch (e) { }
+
+    mymodal.show();
 });
 
 const showzipaddr = (jsons) => {
@@ -119,11 +121,10 @@ sendzip?.addEventListener('click', () => {
         joinfrm.zip2.value = zip.split('-')[1];
         let addrs = `${addr.split(' ')[1]}${addr.split(' ')[2]} ${addr.split(' ')[3]}`;
         joinfrm.addr1.value = addrs;
-        bootstrap.Modal.getInstance(zipmodal).hide();
 
-
+        modal.hide();
     }else {
-        alert('주소를 선택하세요!!')
+        alert('주소를 선택하세요!!');
     }
 });
 
@@ -156,7 +157,7 @@ const styleCheckuid = (chkuid) => {
 
     }
     uidmsg.innerText = msg;
-}
+};
 
 userid?.addEventListener('blur', () =>{
     if(userid.value === ''){
@@ -171,7 +172,7 @@ userid?.addEventListener('blur', () =>{
     fetch(url).then(response => response.text())
         .then(text => styleCheckuid(text));
 
-})
+});
 
 repasswd?.addEventListener('blur', () => {
     let pmsg = '비밀번호가 서로 일치하지 않습니다!!';
